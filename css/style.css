@@ -125,13 +125,19 @@
     
 }
 
-#slider #arrows > * {
+#arrows #left-arrow,
+#arrows #right-arrow {
     transform: scale(1);
 
     transition: transform 0.4s ease;
+
+    /* annulla il fatto che il contenitore si faccia cliccare "attraverso" 
+        quindi grazie a questa regola riesce a "captare" i click
+    */
+    pointer-events: auto;
 }
 
-#slider #arrows > *:hover {
+#arrows > *:hover {
     cursor: pointer;
 
     transform: scale(1.2);

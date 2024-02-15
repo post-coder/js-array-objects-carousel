@@ -102,7 +102,8 @@ images.forEach(function(currentImage, index) {
 
 
 // questa riga aggiunge la classe active al primo elemento
-document.querySelector(".slide:nth-of-type(1)").classList.add("active");
+showSlide(1);
+
 
 /*
 -  salvo un contatore della slide
@@ -119,34 +120,22 @@ let slideNumber = 1;
 // -  QUANDO premo la freccia SU
 document.querySelector("#right-arrow").addEventListener("click", function() {
 
+    
 
     if (slideNumber < images.length) {
-
-        // - prendo l'immagine attuale e le rimuovo la classe "active"  
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.remove("active");
 
         // - aumento il contatore di 1
         slideNumber++;
 
-        // - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.add("active");
+        showSlide(slideNumber);
 
-        console.log(slideNumber);
 
     } else {
 
-        // - prendo l'immagine attuale e le rimuovo la classe "active"  
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.remove("active");
-
-        // resetto la variabile che mi conta l'immagine a cui sono arrivato
         slideNumber = 1;
 
-        // - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.add("active");
-
+        showSlide(slideNumber);
     }
-
-        
 });
 
 
@@ -154,28 +143,18 @@ document.querySelector("#right-arrow").addEventListener("click", function() {
 document.querySelector("#left-arrow").addEventListener("click", function() {
 
     if (slideNumber > 1) {
-        // - prendo l'immagine attuale e le rimuovo la classe "active"  
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.remove("active");
 
-        // - diminuisco il contatore di 1
         slideNumber--;
 
-        // - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.add("active");
+        showSlide(slideNumber);
 
-        console.log(slideNumber);
 
     } else {
-
-        // - prendo l'immagine attuale e le rimuovo la classe "active"  
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.remove("active");
 
         // - metto il valore di slideNumebr = alla posizione dell'ultima immagine
         slideNumber = images.length;
 
-        // - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.add("active");
-
+        showSlide(slideNumber);
     }
     
 
@@ -194,42 +173,83 @@ const thumbnailsElements = document.querySelectorAll("#thumbnails .thumb");
 
 thumbnailsElements.forEach(((currentThumbnail, index) => {
 
+    // quando clicchiamo su una thumbnail
     currentThumbnail.addEventListener("click", () => {
-        // le arrow function cambiano il this
-        // il this dentro le arrow function è sempre la window
-        
-        // non utilizzando una arrow function
-        // il mio this rappresenta la thumbnail cliccata
-        
-        // come faccio a capire il numero di questa thumbnail?
-
-
-
-        
-        // rimuovere la classe active dalla slide precedente
-        // so quale sia la slide precedente perchè il suo numero è segnato nella variabile "slideNumber"
-        // mi tocca quindi aggiornare questo numero
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.remove("active");
 
         slideNumber = index + 1;
+        
 
-        // rimuovo la classe active da tutte le anteprime
-        thumbnailsElements.forEach((thumb => {
-            thumb.classList.remove("active");
-        }))
-        // aggiungo la classe active solo all'anteprima cliccata
-        currentThumbnail.classList.add("active")
-
-
-
-
-        // quando clicchiamo su un'anteprima
-        // la slide che corrisponde alla stessa posizione dell'anteprima (index)
-        // deve avere la classe "active"
-        document.querySelector(`#slider .slide:nth-of-type(${index + 1})`).classList.add("active");
-        // dentro "index" so quale sia la posizione dell'anteprima
+        showSlide(slideNumber);
+        // viewThumbnail(currentThumbnail, index)
 
 
     })
 
 }));
+
+
+function viewThumbnail(currentThumbnail, index) {
+    // le arrow function cambiano il this
+    // il this dentro le arrow function è sempre la window
+    
+    // non utilizzando una arrow function
+    // il mio this rappresenta la thumbnail cliccata
+    
+    // come faccio a capire il numero di questa thumbnail?
+
+
+
+    
+    // rimuovere la classe active dalla slide precedente
+    // so quale sia la slide precedente perchè il suo numero è segnato nella variabile "slideNumber"
+    // mi tocca quindi aggiornare questo numero
+    document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.remove("active");
+
+
+    // rimuovo la classe active da tutte le anteprime
+    thumbnailsElements.forEach((thumb => {
+        thumb.classList.remove("active");
+    }))
+    // aggiungo la classe active solo all'anteprima cliccata
+    currentThumbnail.classList.add("active")
+
+
+
+
+    // quando clicchiamo su un'anteprima
+    // la slide che corrisponde alla stessa posizione dell'anteprima (index)
+    // deve avere la classe "active"
+    document.querySelector(`#slider .slide:nth-of-type(${index + 1})`).classList.add("active");
+    // dentro "index" so quale sia la posizione dell'anteprima
+
+}
+
+
+function showSlide(number) {
+    // number -> slide da mostrare e anteprima collegata
+    
+    // codice per mostrare la slide corretta
+
+    // rimuoviamo la classe "active" da tutte le altre slide
+
+    // ci metto tutte le slide 
+    const slides = document.querySelectorAll(".slide");
+    slides.forEach(currentSlide => {
+        currentSlide.classList.remove("active")
+    }) 
+
+    // - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
+    document.querySelector(`#slider .slide:nth-of-type(${number})`).classList.add("active");
+
+
+
+    // codice per mostrare la thumbnail corretta
+
+    // prendere tutte le anteprime e rimuovere la classe active
+    const thumbs = document.querySelectorAll(".thumb");
+    thumbs.forEach(thumb => {
+        thumb.classList.remove("active");
+    })
+
+    document.querySelector(`.thumb:nth-of-type(${number + 1})`).classList.add("active");
+}
