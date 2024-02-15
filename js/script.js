@@ -14,6 +14,10 @@ e dovremo aggiungervi titolo e testo.
 
 Milestone 2:
 Aggiungere il ciclo infinito del carosello. Ovvero se la miniatura attiva è la prima e l'utente clicca la freccia verso destra, la miniatura che deve attivarsi sarà l'ultima e viceversa per l'ultima miniatura se l'utente clicca la freccia verso sinistra.
+
+
+BONUS 1:
+Aggiungere le thumbnails (sottoforma di miniatura) ed al click attivare l’immagine corrispondente.
 */
 
 
@@ -54,18 +58,22 @@ console.log(images);
 // bersagliamo lo slider
 const sliderElement = document.getElementById("slider");
 
+// salvo il contenitore delle antemprime
+const thumbnailsElement = document.querySelector("#thumbnails");
+
 
 // tramite un ciclo for prendiamo ogni indirizzo delle immagini dall'array
-images.forEach(function(currentImage) {
+images.forEach(function(currentImage, index) {
     // di volta in volta il currentImage diventa un elemento singolo diverso
     // dell'array "images"
     // quindi in questo caso UN OGGETTO
 
-
+    // inserisco l'elemento html dentro lo slider
+    // per ognuno di essi andremo a creare un elemento img dentro lo slider
     sliderElement.innerHTML += `    
     <section class="slide">
 
-        <img src="./${currentImage.image}" alt="immagine 1">
+        <img src="./${currentImage.image}" alt="immagine ${index + 1}">
 
         <div class="details">
 
@@ -82,8 +90,14 @@ images.forEach(function(currentImage) {
     </section>
     `;
 
-    // per ognuno di essi andremo a creare un elemento img dentro lo slider
+    // console.log(currentImage)
 
+    // inserisco l'anteprima dentro l'elemento #thumbnails
+    thumbnailsElement.innerHTML += `
+    <div class="thumb">
+        <img src="./${currentImage.image}" alt="anteprima ${index + 1}">
+    </div>
+    `;  
 });
 
 
