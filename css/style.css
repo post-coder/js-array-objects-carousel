@@ -25,6 +25,8 @@
 }
 
 
+
+
 /* stilizzazione .slide */
 #slider .slide {
     position: relative;
@@ -63,11 +65,46 @@
     object-fit: cover;
 }
 
-#slider #arrows {
+
+
+
+/* thumbnails */
+#thumbnails {
     display: flex;
-    flex-direction: column;
+
+    position: relative;
+
+    border: solid 6px #808080;
+
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+
+    background-color: black;
+}
+
+#thumbnails .thumb {
+    width: calc(100% / 5);
+    height: 100px;
+}
+
+#thumbnails .thumb img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+#thumbnails .thumb:not(.active) {
+    opacity: .5;
+}
+
+
+
+/* frecce */
+#arrows {
+    display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
 
     position: absolute;
     top: 0;
@@ -83,6 +120,8 @@
     font-size: 1.5em;
     text-shadow: 1px 4px 3px black;
 
+    /* per evitare problemi con le anteprime al di sotto */
+    pointer-events: none;
     
 }
 
@@ -96,28 +135,4 @@
     cursor: pointer;
 
     transform: scale(1.2);
-}
-
-
-
-/* thumbnails */
-#thumbnails {
-    display: flex;
-
-border: solid 6px #808080;
-
-    border-radius: 0 0 12px 12px;
-    overflow: hidden;
-}
-
-#thumbnails .thumb {
-    width: calc(100% / 5);
-    height: 100px;
-}
-
-#thumbnails .thumb img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
 }

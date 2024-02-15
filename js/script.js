@@ -117,7 +117,7 @@ document.querySelector(".slide:nth-of-type(1)").classList.add("active");
 let slideNumber = 1;
 
 // -  QUANDO premo la freccia SU
-document.querySelector("#up-arrow").addEventListener("click", function() {
+document.querySelector("#right-arrow").addEventListener("click", function() {
 
 
     if (slideNumber < images.length) {
@@ -151,7 +151,7 @@ document.querySelector("#up-arrow").addEventListener("click", function() {
 
 
 // premo la freccia giù
-document.querySelector("#down-arrow").addEventListener("click", function() {
+document.querySelector("#left-arrow").addEventListener("click", function() {
 
     if (slideNumber > 1) {
         // - prendo l'immagine attuale e le rimuovo la classe "active"  
@@ -181,3 +181,55 @@ document.querySelector("#down-arrow").addEventListener("click", function() {
 
 
 });
+
+
+// gestione click delle thumbnail
+// fare in modo che tutte le thumbnail abbiano un addEventListener
+// al click di una thumbnail verrà attivata la slide corrispondente
+// (cliccando sulla SECONDA thumbnail verrà mostrata la SECONDA slide)
+
+// ripeschiamo dal nostro document tutte le thumbnail
+const thumbnailsElements = document.querySelectorAll("#thumbnails .thumb");
+
+
+thumbnailsElements.forEach(((currentThumbnail, index) => {
+
+    currentThumbnail.addEventListener("click", () => {
+        // le arrow function cambiano il this
+        // il this dentro le arrow function è sempre la window
+        
+        // non utilizzando una arrow function
+        // il mio this rappresenta la thumbnail cliccata
+        
+        // come faccio a capire il numero di questa thumbnail?
+
+
+
+        
+        // rimuovere la classe active dalla slide precedente
+        // so quale sia la slide precedente perchè il suo numero è segnato nella variabile "slideNumber"
+        // mi tocca quindi aggiornare questo numero
+        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.remove("active");
+
+        slideNumber = index + 1;
+
+        // rimuovo la classe active da tutte le anteprime
+        thumbnailsElements.forEach((thumb => {
+            thumb.classList.remove("active");
+        }))
+        // aggiungo la classe active solo all'anteprima cliccata
+        currentThumbnail.classList.add("active")
+
+
+
+
+        // quando clicchiamo su un'anteprima
+        // la slide che corrisponde alla stessa posizione dell'anteprima (index)
+        // deve avere la classe "active"
+        document.querySelector(`#slider .slide:nth-of-type(${index + 1})`).classList.add("active");
+        // dentro "index" so quale sia la posizione dell'anteprima
+
+
+    })
+
+}));
